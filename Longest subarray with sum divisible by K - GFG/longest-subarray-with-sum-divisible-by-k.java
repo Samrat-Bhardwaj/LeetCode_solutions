@@ -15,32 +15,33 @@ import java.util.*;
 class Solution{
     int longSubarrWthSumDivByK(int a[], int n, int k)
     {
-        int[] rem_index=new int[k];
-        
-        Arrays.fill(rem_index,-2);
-        
         int csum=0;
         int ans=0;
         
-        rem_index[0]=-1;
+        HashMap<Integer,Integer> map=new HashMap<>(); // rem vs indexes;
+        
         for(int i=0; i<n; i++){
             csum+=a[i];
             
             int rem=csum%k;
             
             if(rem<0){
-                rem+=k;
+                rem=rem+k;
             }
             
-            if(rem_index[rem]!=-2){
-                int len=i-rem_index[rem];
+            if(rem==0){
+                ans=i+1;
+            } else if(map.containsKey(rem)){
+                int len=i-map.get(rem);
+                
                 ans=Math.max(ans,len);
             } else {
-                rem_index[rem]=i;
+                map.put(rem,i);
             }
         }
         
         return ans;
+       
     }
  
 }
