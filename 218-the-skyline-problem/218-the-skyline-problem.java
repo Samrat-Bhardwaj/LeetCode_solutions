@@ -1,31 +1,37 @@
 class Solution {
-    public List<List<Integer>> getSkyline(int[][] buildings) {
-        int n=buildings.length;
+    class Pair implements Comparable<Pair> {
+        int x;
+        int h;
         
-        int[][] arr=new int[2*n][2];
-        
-        int k=0;
-        for(int i=0; i<n; i++){
-            int sp=buildings[i][0];
-            int ep=buildings[i][1];
-            int h=buildings[i][2];
-            
-            arr[k][0]=sp;
-            arr[k][1]=(-1)*h;
-            
-            k++;
-            arr[k][0]=ep;
-            arr[k][1]=h;
-            k++;
+        public Pair(int x, int h){
+            this.x=x;
+            this.h=h;
         }
         
-        Arrays.sort(arr, (int[] a, int [] b)->{
-            if(a[0]==b[0]){
-                return a[1] - b[1];
+        public int compareTo(Pair o){
+            if(this.x ==  o.x){
+                return this.h - o.h;
             } else {
-                return a[0] - b[0];
+                return this.x - o.x;
             }
-        });
+        }
+    }
+    public List<List<Integer>> getSkyline(int[][] buildings) {
+        List<Pair> points=new ArrayList<>();
+        
+        for(int [] b:buildings){
+            int sp=b[0];
+            int ep=b[1];
+            int h=b[2];
+            
+            Pair sph=new Pair(sp,-h);            
+            Pair eph=new Pair(ep,h);
+            
+            points.add(sph);            
+            points.add(eph);
+        }
+        
+        Collections.sort(points);
         
         List<List<Integer>> ans=new ArrayList<>();
         
@@ -35,9 +41,11 @@ class Solution {
         pq.add(0);
         
         
-        for(int i=0; i<2*n; i++){
-            int x=arr[i][0];
-            int h=arr[i][1];
+        for(int i=0; i<points.size(); i++){
+            Pair p=points.get(i);
+            
+            int x=p.x;
+            int h=p.h;
             
             if(h<0){ // starting point
                 pq.add((-1)*h);
