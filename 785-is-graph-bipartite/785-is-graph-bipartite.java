@@ -1,5 +1,5 @@
 class Solution {
-    public boolean isEven(ArrayList<Integer>[] graph, int src, int[] vis){
+    public boolean isEven(int[][] graph, int src, int[] vis){
         LinkedList<Integer> que=new LinkedList<>();
         
         que.addLast(src);
@@ -51,7 +51,7 @@ class Solution {
         
         for(int i=0; i<vtces; i++){
             if(vis[i]==-1){
-                boolean even=isEven(myGraph,i,vis);
+                boolean even=isEven(graph,i,vis);
                 if(even==false) return false;
             }
         }
