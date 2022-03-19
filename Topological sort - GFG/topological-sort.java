@@ -59,29 +59,40 @@ class Main {
 
 class Solution
 {
-    //Function to return list containing vertices in Topological order.
     
-    static void dfs(int src,ArrayList<ArrayList<Integer>> graph,boolean[] vis,ArrayList<Integer> al){
-        vis[src]=true;
+    // if cycle -> return true
+    static boolean dfs(int src,ArrayList<ArrayList<Integer>> graph,int[] vis,ArrayList<Integer> al){
+        vis[src]=1;
         
         for(int nbr:graph.get(src)){
-            if(!vis[nbr]){
-                dfs(nbr,graph,vis,al);
+            if(vis[nbr]==0){
+                boolean cycle=dfs(nbr,graph,vis,al);
+                if(cycle) return true;
+            } else if(vis[nbr]==1){
+                return true;
             }
         }
         
+        vis[src]=2;
         al.add(src);
+        
+        return false;
     }
     
     
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
     {
-        boolean[] vis=new boolean[V];
+        int[] vis=new int[V];
         ArrayList<Integer> al=new ArrayList<>();
         
         for(int i=0; i<V; i++){
-            if(!vis[i]){
-                dfs(i,adj,vis,al);
+            if(vis[i]==0){
+                boolean cycle = dfs(i,adj,vis,al);
+                
+                if(cycle){
+                    System.out.println("NO SOLUTION!!!!!!!");
+                    return new int[]{};
+                }
             }
         }
         
