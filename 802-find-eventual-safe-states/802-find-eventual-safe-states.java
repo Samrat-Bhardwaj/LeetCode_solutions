@@ -19,20 +19,26 @@ class Solution {
         int V=graph.length;
         
         int[] vis=new int[V];
-        
-        for(int i=0; i<V; i++){
-            if(vis[i]==0){
-                boolean cycle=dfs(i,graph,vis);            
-            }
-        }
-        
         List<Integer> ans=new ArrayList<>();
         
         for(int i=0; i<V; i++){
-            if(vis[i]==2){
+            if(vis[i]==0){
+                boolean cycle=dfs(i,graph,vis); 
+                if(!cycle){
+                    ans.add(i);
+                }
+            } else if(vis[i]==2){
                 ans.add(i);
             }
         }
+        
+        
+        
+        // for(int i=0; i<V; i++){
+        //     if(vis[i]==2){
+        //         ans.add(i);
+        //     }
+        // }
         
         return ans;
     }
