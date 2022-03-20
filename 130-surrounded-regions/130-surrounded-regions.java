@@ -1,7 +1,9 @@
 class Solution {
-    int[][] dirs={{0,1},{0,-1},{1,0},{-1,0}};
+    
     public void dfs(int i, int j,char[][] board,int n, int m){
         board[i][j]='$';
+        
+        int[][] dirs={{0,1},{0,-1},{1,0},{-1,0}};
         
         for(int[] dir:dirs){
             int x=i+dir[0];
