@@ -28,6 +28,8 @@ class Solution {
             par[i]=i;
             size[i]=1;
         }
+
+        int comps=n;
         
         for(int[] edge:connections){
             int u=edge[0];
@@ -38,14 +40,15 @@ class Solution {
             
             if(p1!=p2){
                 merge(p1,p2);
+                comps--;
             }
         }
         
-        int comps=0;
-        for(int i=0; i<n; i++){
-            int p=findPar(i);
-            if(p==i) comps++;
-        }
+//         int comps=0;
+//         for(int i=0; i<n; i++){
+//             int p=findPar(i);
+//             if(p==i) comps++;
+//         }
         
         return comps-1;
     }
