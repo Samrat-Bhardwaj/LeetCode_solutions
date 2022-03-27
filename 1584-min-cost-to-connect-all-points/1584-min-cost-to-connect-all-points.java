@@ -1,6 +1,6 @@
 class Solution {
     int[] par;
-  int[] size;
+    int[] size;
 
   public int findPar(int u){
         if(par[u]==u) return u;
@@ -13,13 +13,14 @@ class Solution {
     }
 
     public void merge(int p1, int p2){
-        if(size[p1]>=size[p2]){
-            par[p2]=p1;
-            size[p1]+=size[p2];
-        } else {
-            par[p1]=p2;
-            size[p2]+=size[p1];
-        }
+        // if(size[p1]>=size[p2]){
+        //     par[p2]=p1;
+        //     size[p1]+=size[p2];
+        // } else {
+        //     par[p1]=p2;
+        //     size[p2]+=size[p1];
+        // }
+        par[p2]=p1;
     }
 
     public int kruskal(int[][] edges, int n){
