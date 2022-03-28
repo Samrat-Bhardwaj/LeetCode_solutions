@@ -29,6 +29,8 @@ class Solution {
             
             if(dis[i][j] < effort_till_now) continue;
             
+            if(i==n-1 && j==m-1) return effort_till_now;
+            
             for(int[] dir:dirs){
                 int x=i+dir[0];
                 int y=j+dir[1];
