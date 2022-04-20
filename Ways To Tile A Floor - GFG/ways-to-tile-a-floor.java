@@ -52,9 +52,29 @@ class Solution {
         return dp[n];
     }
     
+    public static long tab_better(int n){
+        if(n==1) return 1;
+        if(n==2) return 2;
+        
+        long a=1; // n==0
+        long b=1; // n==1
+        
+        for(int i=2; i<=n; i++){
+            long c=a+b; // ans for i is equal sum of ans for i-1 and ans for i-2
+            
+            a=b;
+            b=c;
+            
+            a=a%mod;
+            b=b%mod;
+        }
+        
+        return b;
+    }
+    
     static Long numberOfWays(int N) {
         long[] memo=new long[N+1];
         // return rec(N,memo);
-        return tab(N);
+        return tab_better(N);
     }
 };
