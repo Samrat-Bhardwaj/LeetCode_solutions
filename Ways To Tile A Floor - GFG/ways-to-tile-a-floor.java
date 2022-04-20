@@ -19,6 +19,7 @@ class GFG {
 
 class Solution {
     static long mod=(long)(1e9+7);
+    
     static long rec(int n,long[] memo){
         if(n==0) return 1;
         
@@ -35,8 +36,25 @@ class Solution {
         
         return memo[n]=ans%mod;
     }
+    
+    public static long tab(int n){
+        long[] dp=new long[n+1];
+        dp[0]=1;
+        
+        for(int i=1; i<=n; i++){
+            long ans=dp[i-1];
+            if(i-2>=0)
+                ans+=dp[i-2];
+                
+            dp[i]=ans%mod;
+        }
+        
+        return dp[n];
+    }
+    
     static Long numberOfWays(int N) {
         long[] memo=new long[N+1];
-        return rec(N,memo);
+        // return rec(N,memo);
+        return tab(N);
     }
 };
