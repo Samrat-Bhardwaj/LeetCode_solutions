@@ -23,6 +23,27 @@ class Solution {
             return memo[n][m]=Math.max(rec_memo(text1,text2,n-1,m,memo),rec_memo(text1,text2,n,m-1,memo));
         }
     }
+    
+    public int tab(String text1, String text2, int N, int M){
+        int[][] dp=new int[N+1][M+1];
+        
+        for(int n=0; n<=N; n++){
+            for(int m=0; m<=M; m++){
+                if(n==0 || m==0){
+                    dp[n][m]=0;
+                    continue;
+                }
+
+                if(text1.charAt(n-1)==text2.charAt(m-1)){
+                    dp[n][m]=dp[n-1][m-1]+1; //rec_memo(text1,text2,n-1,m-1,memo)+1;
+                } else {
+                    dp[n][m]=Math.max(dp[n-1][m],dp[n][m-1]);
+                }
+            }
+        }
+        
+        return dp[N][M];
+    }
 
     public int longestCommonSubsequence(String text1, String text2) {
         int n=text1.length();
@@ -30,7 +51,8 @@ class Solution {
         
         int[][] memo=new int[n+1][m+1];
                 // return rec(text1,text2,n,m);
-        return rec_memo(text1,text2,n,m,memo);
+        // return rec_memo(text1,text2,n,m,memo);
+        return tab(text1,text2,n,m);
         
     }
 }
