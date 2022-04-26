@@ -60,7 +60,7 @@ class Solution {
         int n=word1.length();
         int m=word2.length();
         
-        int[][] memo=new int[n+1][m+1];
+        // int[][] memo=new int[n+1][m+1];
         // return rec_memo(word1,word2,n,m,memo);
         return tab(word1,word2,n,m);
     }
