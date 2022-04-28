@@ -32,9 +32,8 @@ class Solution {
             int nheight=envelopes[i][1];
             
             int pos=BS(dp,nheight);
-            // if(dp.size()>0)
-            // System.out.println(dp.get(dp.size()-1)[0]+" "+nwidth);
-            if(pos==dp.size() && (dp.size()==0 || (dp.get(dp.size()-1)[0]<nwidth))){
+            
+            if(pos==dp.size()){
                 dp.add(new int[]{nwidth,nheight});
             } else if(pos<dp.size()){
                 dp.set(pos,new int[]{nwidth,nheight});
