@@ -136,12 +136,8 @@ class Solution
         int rmax=rans[1];
         
         int sum=root.data + Math.max(lsum,rsum);
-        int max=Math.max(lmax,rmax);
-        
-        if(lsum!=-(int)(1e8) && rsum!=-(int)(1e8)){
-            max=Math.max(max,root.data+lsum+rsum);
-        }
-        
+        int max=Math.max(lmax,Math.max(rmax,root.data+lsum+rsum));
+       
         return new int[]{sum,max};
     }
     
