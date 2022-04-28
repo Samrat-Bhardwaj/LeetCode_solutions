@@ -1,12 +1,12 @@
 class Solution {
-    public int BS(ArrayList<int[]> dp, int ele){
+    public int BS(ArrayList<Integer> dp, int ele){
         int si=0;
         int ei=dp.size()-1;
         
         while(si<=ei){
             int mid=(si+ei)/2;
             
-            if(dp.get(mid)[1]<ele){
+            if(dp.get(mid)<ele){
                 si=mid+1;
             } else {
                 ei=mid-1;
@@ -24,7 +24,7 @@ class Solution {
             return a[0]-b[0]; // width  
         });
         
-        ArrayList<int[]> dp=new ArrayList<>();
+        ArrayList<Integer> dp=new ArrayList<>();
         
         
         for(int i=0; i<n; i++){
@@ -34,9 +34,9 @@ class Solution {
             int pos=BS(dp,nheight);
             
             if(pos==dp.size()){
-                dp.add(new int[]{nwidth,nheight});
-            } else if(pos<dp.size()){
-                dp.set(pos,new int[]{nwidth,nheight});
+                dp.add(nheight);
+            } else {
+                dp.set(pos,nheight);
             }
         }
         
