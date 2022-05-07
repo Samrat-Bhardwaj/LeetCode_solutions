@@ -5,7 +5,6 @@ class Solution {
         
         for(int i=0; i<weights.length; i++){
             int w=weights[i];
-            if(w>mid) return false;
             
             if(curr_weight+w > mid){
                 total_days++;
@@ -23,8 +22,13 @@ class Solution {
     }
     
     public int shipWithinDays(int[] weights, int days) {
-        int si=1;
-        int ei=(int)(1e9);
+        int si=1; // max of array
+        int ei=0; // sum of array
+        
+        for(int e:weights){
+            si=Math.max(si,e);
+            ei+=e;
+        }
         
         
         while(si<=ei){
