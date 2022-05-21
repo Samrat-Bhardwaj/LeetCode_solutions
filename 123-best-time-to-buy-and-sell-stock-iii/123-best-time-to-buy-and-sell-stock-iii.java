@@ -14,6 +14,6 @@ class Solution {
             dpi11=Math.max(dpi11,0-p);
         }
         
-        return Math.max(dpi10,dpi20);
+        return dpi20;
     }
 }
