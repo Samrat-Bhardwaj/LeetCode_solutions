@@ -29,36 +29,41 @@ class GFG{
 //User function Template for Java
 
 class Solution{
-    static int rec(int i, int j, int[][] gold, int n, int m,int[][] dp){
-        if(j==m-1){
-            return dp[i][j]=gold[i][j];
+    public static int tab(int[][] gold, int n, int m){
+        int[][] dp=new int[n][m];
+
+        for(int j=m-1; j>=0; j--){
+            for(int i=0; i<n; i++){
+                if(j==m-1){
+                    dp[i][j]=gold[i][j];
+                    continue;
+                }
+                
+                //if(dp[i][j]!=0) return dp[i][j];
+                
+                int ans=0;
+                if(i-1>=0)
+                    ans=Math.max(ans,dp[i-1][j+1]);//Math.max(ans,rec(i-1,j+1,gold,n,m,dp));
+                
+                ans=Math.max(ans,dp[i][j+1]);//Math.max(ans,rec(i,j+1,gold,n,m,dp));
+                
+                if(i+1<n)
+                    ans=Math.max(ans,dp[i+1][j+1]);//Math.max(ans,rec(i+1,j+1,gold,n,m,dp));
+                    
+                dp[i][j]=ans + gold[i][j];
+            }
         }
-        
-        if(dp[i][j]!=0) return dp[i][j];
-        
-        int ans=0;
-        if(i-1>=0)
-            ans=Math.max(ans,rec(i-1,j+1,gold,n,m,dp));
-        
-        ans=Math.max(ans,rec(i,j+1,gold,n,m,dp));
-        
-        if(i+1<n)
-            ans=Math.max(ans,rec(i+1,j+1,gold,n,m,dp));
-            
-        return dp[i][j]=ans + gold[i][j];
+
+        int max_gold=0;
+        for(int i=0; i<n; i++){
+            max_gold=Math.max(max_gold,dp[i][0]);
+        }
+
+        return max_gold;
     }
     
     static int maxGold(int n, int m, int gold[][])
     {
-        int ans=0;
-        
-        int[][] dp=new int[n][m];
-        
-        for(int i=0; i<n; i++){
-            int curr_ans=rec(i,0,gold,n,m,dp);
-            ans=Math.max(ans,curr_ans);
-        }
-        
-        return ans;
+        return tab(gold,n,m);
     }
 }
