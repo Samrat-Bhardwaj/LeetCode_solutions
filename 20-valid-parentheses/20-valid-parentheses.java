@@ -22,8 +22,8 @@ class Solution {
             }
         }
 
-        if(st.size()==0) return true;
+        if(st.size()!=0) return false;
 
-        return false;
+        return true;
     }
 }
