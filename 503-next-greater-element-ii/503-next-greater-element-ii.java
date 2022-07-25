@@ -5,38 +5,24 @@ class Solution {
         int[] ngr=new int[n];
         Stack<Integer> st=new Stack<>();
 
-        for(int i=n-1; i>=0; i--){
-            int ele=nums[i];
+        for(int i=2*n-1; i>=0; i--){
+            int idx=i%n;
+            
+            int ele=nums[idx];
 
             while(st.size()>0 && nums[st.peek()]<=ele){
                 st.pop();
             }
 
             if(st.size()==0){
-                ngr[i]=-1;
+                ngr[idx]=-1;
             } else {
-                ngr[i]=nums[st.peek()];
+                ngr[idx]=nums[st.peek()];
             }
 
-            st.push(i);
+            st.push(idx);
         }
-
-        for(int i=n-1; i>=0; i--){
-            int ele=nums[i];
-
-            while(st.size()>0 && nums[st.peek()]<=ele){
-                st.pop();
-            }
-
-            if(st.size()==0){
-                ngr[i]=-1;
-            } else {
-                ngr[i]=nums[st.peek()];
-            }
-
-            st.push(i);
-        }
-
+        
         return ngr;
     }
 }
