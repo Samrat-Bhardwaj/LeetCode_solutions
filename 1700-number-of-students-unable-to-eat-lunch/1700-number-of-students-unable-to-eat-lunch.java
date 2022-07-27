@@ -24,7 +24,7 @@ class Solution {
                 curr_students--;
             }
             
-            if(curr_students==0) return st.size();
+            if(curr_students==0) return que.size();
             
             st.pop();
             que.remove();
