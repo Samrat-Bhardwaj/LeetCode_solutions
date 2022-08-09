@@ -21,31 +21,33 @@ class Solution {
         return dp;
     }
 
-    public int minCut_memo(String str,int si, boolean[][] isPallindrome, int[] dp){
-        if(isPallindrome[si][str.length()-1]){
-            return dp[si]=0;
-        }
-
-        if(dp[si]!=-1){
-            return dp[si];
-        }
-
-        int ans=(int)(1e9);
-        for(int cut=si; cut<str.length(); cut++){
-            if(isPallindrome[si][cut]){
-                ans=Math.min(ans,minCut_memo(str,cut+1,isPallindrome,dp)+1);
+   public int minCut_tab(String str, int SI, boolean[][] isPallindrome, int[] dp){
+        for(int si=str.length()-1; si>=0; si--){
+            if(isPallindrome[si][str.length()-1]){
+                dp[si]=0;
+                continue;
             }
+    
+            int ans=(int)(1e9);
+            for(int cut=si; cut<str.length(); cut++){
+                if(cut+1<str.length() && isPallindrome[si][cut]){
+                    ans=Math.min(ans,dp[cut+1]+1);//ans=Math.min(ans,minCut_memo(str,cut+1,isPallindrome,dp)+1);
+                }
+            }
+    
+            dp[si]=ans;
         }
 
-        return dp[si]=ans;
+        return dp[SI];
     }
-    
+
     public int minCut(String s) {
         boolean[][] isPallindrome=makeIsPallindrome(s);
         int[] dp=new int[s.length()];
 
-        Arrays.fill(dp,-1);
+        Arrays.fill(dp,(int)(1e8));
 
-        return minCut_memo(s, 0, isPallindrome, dp);
+        // return minCut_memo(s, 0, isPallindrome, dp);
+        return minCut_tab(s, 0, isPallindrome, dp);
     }
 }
