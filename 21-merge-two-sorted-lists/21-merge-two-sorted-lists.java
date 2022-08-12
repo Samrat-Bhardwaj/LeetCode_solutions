@@ -22,11 +22,11 @@ class Solution {
             
             if(i.val < j.val){
                 k.next=i;
-                i.next=null;
+                // i.next=null;
                 i=ikaNext;
             } else {
                 k.next=j;
-                j.next=null;
+                // j.next=null;
                 j=jkaNext;
             }
             
