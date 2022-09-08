@@ -10,43 +10,45 @@
  */
 class Solution {
 public:
-   ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* dummy=new ListNode(-1);
-        ListNode* itr=dummy;
+class compare {
+    public:
+        bool operator()(ListNode* a, ListNode* b){
+            return a->val > b->val;  // node with smaller val will be on top
+            // return a->val < b->val;  // node with greater val will be on top
+        }
+};
 
-        while(list1 && list2){
-            if(list1->val < list2->val){
-                itr->next=list1;
-                list1=list1->next;
-            } else {
-                itr->next=list2;
-                list2=list2->next;
-            }
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+    if(lists.size()==0) return nullptr;
 
-            itr=itr->next;
-        }        
+    priority_queue<ListNode*,vector<ListNode*>,compare> pq;
 
-        if(list1){
-            itr->next=list1;
-        } 
-        if(list2){
-            itr->next=list2;
+    // PriorityQueue<ListNode> pq=new PriorityQueue<>((a,b)->{
+    //     return a.val - b.val; // smaller val node on top
+    //     return b.val - a.val; // larger node on top
+    // });
+
+    for(int i=0; i<lists.size(); i++){
+        ListNode* ith=lists[i];
+        if(ith)
+            pq.push(ith);
+    }
+
+    ListNode* dummy=new ListNode(-1);
+    ListNode* itr=dummy;
+
+    while(pq.size()){
+        ListNode* top=pq.top(); pq.pop();
+
+        itr->next=top;
+
+        if(top->next){
+            pq.push(top->next);
         }
 
-        return dummy->next;
-    }
-   ListNode* mergeKLists(vector<ListNode*>& lists, int si, int ei){
-        if(si==ei){
-            return lists[si];
-        }
-
-        int mid=(si+ei)/2;
-
-        return mergeTwoLists(mergeKLists(lists,si,mid), mergeKLists(lists,mid+1,ei));
+        itr=itr->next;
     }
 
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if(lists.size()==0) return nullptr;
-        return mergeKLists(lists,0,lists.size()-1);
-    }
+    return dummy->next;
+}
 };
