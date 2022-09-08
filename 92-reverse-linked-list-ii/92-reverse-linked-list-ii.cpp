@@ -28,15 +28,17 @@ public:
         ListNode* left_prev=nullptr;
         
         while(itr){
-            ListNode* itrKaNext=itr->next;
-            
-            if(curr_node<left){
-                left_prev=itr;
-            } else if(curr_node>=left && curr_node<=right){
+            while(curr_node>=left && curr_node<=right){
+                ListNode* itrKaNext=itr->next;
                 itr->next=nullptr;
                 addFirst(itr);
-            } else {
-                if(left_prev==nullptr){
+                
+                itr=itrKaNext;
+                curr_node++;
+            }
+            
+            if(curr_node>right){
+                if(left_prev==nullptr){ // head
                     head=th;
                 } else {
                     left_prev->next=th;
@@ -46,19 +48,11 @@ public:
                 break;
             }
             
-            itr=itrKaNext;
+            left_prev=itr;
+            itr=itr->next;
             curr_node++;
         }
         
-        if(itr==nullptr){
-            if(left_prev==nullptr){
-                head=th;
-            } else {
-                left_prev->next=th;
-            }
-
-            tt->next=itr;
-        }
         return head;
     }
 };
