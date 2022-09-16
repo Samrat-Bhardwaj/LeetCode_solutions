@@ -25,7 +25,7 @@ public:
             long val=mine;
             long tp=st.top();
             
-            long old_min= val - tp + val;
+            long old_min= 2*val-tp;
             
             mine=old_min;
         }
