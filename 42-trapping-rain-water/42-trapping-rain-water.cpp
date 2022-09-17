@@ -4,19 +4,22 @@ public:
         int n=height.size();
         int ans=0;
         
-        stack<int> st;
+        int i=0;
+        int j=n-1;
+        int lmax=0;
+        int rmax=0;
         
-        for(int i=0; i<n; i++){
-            while(st.size()!=0 && height[st.top()]<=height[i]){
-                int h=height[st.top()];
-                st.pop();
-                
-                if(st.size()==0) break;
-                
-                int w=i-st.top()-1;
-                ans+=w*(min(height[i],height[st.top()])-h);
+        while(i<j){
+            lmax=max(lmax,height[i]);
+            rmax=max(rmax,height[j]);
+            
+            if(lmax<=rmax){
+                ans+=lmax-height[i];
+                i++;
+            } else {
+                ans+=(rmax-height[j]);
+                j--;
             }
-            st.push(i);
         }
         
         return ans;
