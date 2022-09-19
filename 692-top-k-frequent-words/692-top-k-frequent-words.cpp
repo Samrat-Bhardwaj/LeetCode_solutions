@@ -1,34 +1,35 @@
 class Solution {
-    public List<String> topKFrequent(String[] words, int k) {
-        HashMap<String,Integer> map=new HashMap<>();
-        
-        for(String s:words){
-            map.put(s,map.getOrDefault(s,0)+1);
+public:
+    vector<string> topKFrequent(vector<string>& words, int k) {    
+        unordered_map<string,int> m;
+        for(string s:words){
+            m[s]++;
         }
         
-        PriorityQueue<String> pq=new PriorityQueue<>((a,b)->{
-            if(map.get(a)==map.get(b)){
-                return b.compareTo(a);
-            }
-            
-           return map.get(a) - map.get(b); 
-        });
+         auto comp = [&](const pair<string,int>& a, const pair<string,int>& b) {
+            return a.second > b.second || (a.second == b.second && a.first < b.first);
+        };
         
-        for(String s:map.keySet()){
-            pq.add(s);
+        typedef priority_queue< pair<string,int>, vector<pair<string,int>>, decltype(comp) > my_priority_queue_t;
+        my_priority_queue_t  pq(comp);
+        
+        for(auto it:m){
+            pq.push(it);
             
             if(pq.size()>k){
-                pq.remove();
+                pq.pop();
             }
         }
         
-        List<String> ans=new ArrayList<>();
+        vector<string> ans;
         
-        while(pq.size()>0){
-            ans.add(pq.remove());
+        while(pq.size()){
+            ans.push_back(pq.top().first);
+            pq.pop();
         }
         
-        Collections.reverse(ans);
+        reverse(ans.begin(),ans.end());
+        
         return ans;
     }
-}
+};
