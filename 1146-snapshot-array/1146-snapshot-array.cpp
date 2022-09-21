@@ -20,7 +20,8 @@ public:
         auto itr=arr[index].upper_bound(snap_id);
         
         if(itr==arr[index].begin()) return 0;
-        return prev(itr)->second;
+        itr--;
+        return itr->second;
     }
 };
 
