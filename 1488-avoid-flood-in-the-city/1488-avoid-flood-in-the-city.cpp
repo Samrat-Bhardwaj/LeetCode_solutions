@@ -25,8 +25,10 @@ public:
                     
                     ans[ld]=lake;
                     empty.erase(ld);
-                } 
-                filled[lake]=i;
+                    filled[lake]=i;
+                } else {
+                    filled.insert({lake,i});
+                }
                 ans[i]=-1;
             }
         }
