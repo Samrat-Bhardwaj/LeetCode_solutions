@@ -9,28 +9,30 @@
  */
 class Solution {
 public:
-    bool nodeToRootPath(TreeNode* root, TreeNode* p,vector<TreeNode*>& ntr){
-        if(root==nullptr) return false;
+    vector<TreeNode*> nodeToRootPath(TreeNode* root, TreeNode* p){
+        if(root==nullptr) return {};
         if(root==p){
-            ntr.push_back(p);
-            return true;
+            return {root};
         }
         
-        bool left=nodeToRootPath(root->left,p,ntr);
-        bool right=nodeToRootPath(root->right,p,ntr);
-        
-        if(left || right){
-            ntr.push_back(root);
-            return true;
+        vector<TreeNode*> left=nodeToRootPath(root->left,p);
+        if(left.size()){
+            left.push_back(root);
+            return left;
         }
         
-        return false;
+        vector<TreeNode*> right=nodeToRootPath(root->right,p);
+        if(right.size()){
+            right.push_back(root);
+            return right;
+        }
+        
+        return {};
     }
+    
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<TreeNode*> ntr1;
-        nodeToRootPath(root,p,ntr1);
-        vector<TreeNode*> ntr2;
-        nodeToRootPath(root,q,ntr2);
+        vector<TreeNode*> ntr1=nodeToRootPath(root,p);
+        vector<TreeNode*> ntr2=nodeToRootPath(root,q);
         
         int i=ntr1.size()-1;
         int j=ntr2.size()-1;
