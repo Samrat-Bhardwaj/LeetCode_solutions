@@ -9,39 +9,26 @@
  */
 class Solution {
 public:
-    vector<TreeNode*> nodeToRootPath(TreeNode* root, TreeNode* p){
-        if(root==nullptr) return {};
-        if(root==p){
-            return {root};
-        }
+    bool lca_better(TreeNode* root, TreeNode* d1, TreeNode* d2,TreeNode*& lca){
+        if(root==nullptr) return false;
+        if(lca!=nullptr) return true;
         
-        vector<TreeNode*> left=nodeToRootPath(root->left,p);
-        if(left.size()){
-            left.push_back(root);
-            return left;
-        }
+        bool self=false;
+        if(root==d1 || root==d2) self=true;
         
-        vector<TreeNode*> right=nodeToRootPath(root->right,p);
-        if(right.size()){
-            right.push_back(root);
-            return right;
-        }
+        bool left=lca_better(root->left,d1,d2,lca);
+        bool right=lca_better(root->right,d1,d2,lca);
         
-        return {};
+        if(lca!=nullptr) return true;
+        if((left && right) || (self && left) || (self && right)) lca=root;
+        
+        return self || left || right;
     }
     
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<TreeNode*> ntr1=nodeToRootPath(root,p);
-        vector<TreeNode*> ntr2=nodeToRootPath(root,q);
+        TreeNode* lca=nullptr;
+        lca_better(root,p,q,lca);
         
-        int i=ntr1.size()-1;
-        int j=ntr2.size()-1;
-        
-        while(i>=0 && j>=0 && ntr1[i]==ntr2[j]){
-            i--;
-            j--;
-        }
-        
-        return ntr1[i+1]; // ntr2[j+1];
+        return lca;
     }
 };
