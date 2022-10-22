@@ -14,26 +14,21 @@
  * }
  */
 class Solution {
-    public TreeNode build(int[] preorder, int si, int ei){
-        if(si > ei) return null;
-        if(si == ei) return new TreeNode(preorder[si]);
-        
-        TreeNode root=new TreeNode(preorder[si]);
-        int idx=si+1;
-        
-        while(idx <= ei && preorder[idx] < root.val){
-            idx++;
+    int idx=0;
+    public TreeNode construct(int[] preorder, int lbound, int rbound){
+        if(idx >= preorder.length || preorder[idx] <= lbound || preorder[idx] >= rbound){
+            return null;
         }
         
-        int count= idx - si - 1;
-        root.left = build(preorder,si+1,si+count);
-        root.right=build(preorder,idx,ei);
+        TreeNode root=new TreeNode(preorder[idx]);
+        idx++;
+        
+        root.left=construct(preorder,lbound,root.val);
+        root.right=construct(preorder,root.val,rbound);
         
         return root;
     }
     public TreeNode bstFromPreorder(int[] preorder) {
-        int n=preorder.length;
-        
-        return build(preorder,0,n-1);
+        return construct(preorder,-1001,1001);
     }
 }
