@@ -11,21 +11,42 @@
  */
 class Solution {
 public:
-    bool isBST(TreeNode* root, TreeNode*& prev){
-        if(!root) return true;
+    class bstPair {
+        public:
+            bool isBST=true;
+            long minV=1e15;
+            long maxV=-1e15;
+            
+            bstPair(){
+                
+            }
         
-        if(!isBST(root->left,prev)) return false;
+            bstPair(bool isBST, long minV, long maxV){
+                this->isBST=isBST;
+                this->minV=minV;
+                this->maxV=maxV;
+            }
+    };
+    
+    bstPair* check(TreeNode* root){
+        if(root==nullptr) return new bstPair(true,1e15,-1e15);
         
-        if(prev!=nullptr && prev->val >= root->val) return false;
-        prev=root;
+        bstPair* lp=check(root->left);
+        bstPair* rp=check(root->right);
         
-        if(!isBST(root->right,prev)) return false;
+        bstPair* ansPair=new bstPair();
+        if(!lp->isBST || !rp->isBST || lp->maxV >= root->val || rp->minV <=root->val){
+            ansPair->isBST=false;
+            return ansPair;
+        }
         
-        return true;
+        ansPair->minV=min(lp->minV,(long)root->val);
+        ansPair->maxV=max(rp->maxV,(long)root->val);
+        
+        return ansPair;
     }
     
     bool isValidBST(TreeNode* root) {
-        TreeNode* prev=nullptr;
-        return isBST(root,prev);
+        return check(root)->isBST;
     }
 };
