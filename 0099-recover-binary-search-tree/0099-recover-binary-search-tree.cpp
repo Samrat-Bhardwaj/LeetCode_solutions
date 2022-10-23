@@ -18,7 +18,7 @@ public:
     bool recoverTree2(TreeNode* root){
         if(!root) return false;
         
-        recoverTree2(root->left);
+        if(recoverTree2(root->left)) return true;
         
         if(prev!=nullptr && prev->val > root->val){
             b=root;
@@ -30,7 +30,7 @@ public:
         }
         
         prev=root;
-        recoverTree2(root->right);
+        if(recoverTree2(root->right)) return true;
         
         return false;
     }
