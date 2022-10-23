@@ -15,9 +15,6 @@ public:
     vector<int> solve(TreeNode* root){
         if(!root) return {(int)(-1e8),(int)(-1e8)};
         
-        // if(root->right==nullptr && root->left==nullptr){
-        //     return {root->val,root->val};
-        // }
         vector<int> lans=solve(root->left);
         vector<int> rans=solve(root->right);
         
@@ -28,9 +25,16 @@ public:
         int ram=rans[1]; // right subtree max ans
         
         int mps=max(lps+root->val,max(rps+root->val,root->val)); // my max path sum 
+        // three scenarios => lpath + root.val
+        // rpath + root.val
+        // or we can start path from root.val
         
         int mam=max(mps,max(lps+rps+root->val,max(lam,ram)));
-        // cout<<root->val<<" "<<mps<<" "<<mam<<endl;
+        // for max ans => all the above 3 scenarios 
+        // lpath + rpath + root.val 
+        // l max ans 
+        // r max ans
+        
         return {mps,mam};
     }
     
