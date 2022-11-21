@@ -9,48 +9,24 @@
  * }
  */
 class Solution {
-    public int getSize(ListNode head){
-        int len =0;
-        ListNode curr = head;
-
-        while(curr!=null){
-            curr = curr.next;
-            len++;
-        }
-
-        return len;
-    }
-
-    public ListNode getAt(ListNode head, int idx){
-        ListNode curr = head;
-
-        for(int i=0; i<idx; i++){
-            curr=curr.next;
-        }
-
-        return curr;
-    }
-
     public ListNode reverseList(ListNode head) {
-        int n = getSize(head); 
+        ListNode prev = null;
+        ListNode curr = head;
         
-        int i=0;
-        int j=n-1;
-
-        while(i<j){
-            ListNode nodeAtI = getAt(head, i);
-            ListNode nodeAtJ = getAt(head, j);
-
-            int valAtI = nodeAtI.val;
-            int valAtJ = nodeAtJ.val;
-
-            nodeAtI.val = valAtJ;
-            nodeAtJ.val = valAtI;
-
-            i++;
-            j--;
+        while(curr!=null){
+            // save next pointer 
+            ListNode nextOfCurr = curr.next;
+            
+            // reverse pointer
+            curr.next = prev;
+            
+            // move pointers to the next 2 nodes
+            prev = curr;
+            curr = nextOfCurr;
         }
-
+        // head is now at prev
+        head = prev;
+        
         return head;
     }
 }
