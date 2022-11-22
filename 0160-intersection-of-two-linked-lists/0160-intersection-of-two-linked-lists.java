@@ -10,50 +10,45 @@
  * }
  */
 public class Solution {
-    public ListNode detectCycle(ListNode head) {
-        if(head == null || head.next==null){
-            return null;
+    public int getLength(ListNode head){
+        int len=0;
+        ListNode curr = head;
+        
+        while(curr!=null){
+            curr=curr.next;
+            len++;
         }
         
-        ListNode slow = head;
-        ListNode fast = head;
-
-        while(fast!=null && fast.next!=null){
-            slow = slow.next;
-            fast = fast.next.next;
-
-            if(slow == fast){
-                break;
-            }
-        }
-
-        if(slow != fast){ // there is no cycle 
-            return null;
-        }
-
-        // move slow back to head;
-        slow=head;
-
-        // keep moving at same pace
-        while(slow!=fast){
-            slow = slow.next;
-            fast = fast.next;
-        }
-
-        return slow; 
+        return len;
     }
     
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        ListNode curr = headA;
+        int size1 = getLength(headA);
+        int size2 = getLength(headB);
         
-        while(curr.next!=null){
-            curr = curr.next;
+        ListNode p1 = headA;
+        ListNode p2 = headB;
+        
+        if(size1 > size2){
+            int diff = size1- size2;
+            while(diff>0 && p1!=null){
+                p1=p1.next;
+                diff--;
+            }
+        } else {
+            int diff = size2 - size1;
+            while(diff>0 && p2!=null){
+                p2=p2.next;
+                diff--;
+            }
         }
         
-        curr.next = headA;
-        ListNode ans = detectCycle(headB);
+        while(p1!=null && p2!=null){
+            if(p1==p2) return p1;
+            p1=p1.next;
+            p2=p2.next;
+        }
         
-        curr.next=null;
-        return ans;
+        return null;
     }
 }
