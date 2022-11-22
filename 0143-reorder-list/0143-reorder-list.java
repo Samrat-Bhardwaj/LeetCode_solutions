@@ -66,13 +66,7 @@ class Solution {
             curr = curr.next;
         }
 
-        if(p1==null){
-            curr.next = p2;
-        }
-
-        if(p2==null){
-            curr.next = p1;
-        }
+        curr.next=p1;
 
         return dummy.next;
     }
