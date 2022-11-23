@@ -15,7 +15,7 @@ class Solution {
                 ans = currArea; // getting a new maximum
             }
             
-            if(height[i] < height[j]){
+            if(height[i] <= height[j]){
                 i++;
             } else {
                 j--;
