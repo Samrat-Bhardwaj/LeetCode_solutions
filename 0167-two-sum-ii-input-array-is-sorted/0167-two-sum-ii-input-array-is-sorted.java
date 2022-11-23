@@ -4,6 +4,7 @@ class Solution {
         
         int i=0; 
         int j=n-1;
+        int[] ans = new int[2];
         
         while(i<j){
             int csum = nums[i] + nums[j];
@@ -13,10 +14,12 @@ class Solution {
             } else if(csum > target){
                 j--;
             } else {
-                return new int[]{i+1,j+1};
+                ans[0]=i+1;
+                ans[1]=j+1;
+                return ans;
             }
         }
         
-        return new int[]{1,2,2,3,3,4,4,4,4,4,34,3,2};
+        return ans;
     }
 }
