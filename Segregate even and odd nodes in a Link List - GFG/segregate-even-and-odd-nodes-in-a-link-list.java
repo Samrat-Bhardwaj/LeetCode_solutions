@@ -99,8 +99,7 @@ class Solution{
 		Node odd = dummy1;
 		Node even = dummy2;
 		Node curr = head;
-		int count = 1;
-
+		
 		while(curr!=null){
 			Node nextOfCurr = curr.next;
 			curr.next=null;
@@ -115,8 +114,6 @@ class Solution{
 				curr = nextOfCurr;
 				even = even.next;
 			}
-
-			count++;
 		}
 
 		Node oddHead = dummy1.next;
