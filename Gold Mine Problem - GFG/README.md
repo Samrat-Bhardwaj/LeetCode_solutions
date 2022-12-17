@@ -1,7 +1,6 @@
 # Gold Mine Problem
-## Easy 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">Given a gold mine called&nbsp;<strong>M</strong>&nbsp;of (<strong>n x&nbsp;m)</strong> dimensions. Each field in this mine contains a positive integer which is the amount of gold in tons. Initially the miner can start from any row in the first column. From&nbsp;a given cell, the miner can move </span></p>
+## Easy
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given a gold mine called&nbsp;<strong>M</strong>&nbsp;of (<strong>n x&nbsp;m)</strong> dimensions. Each field in this mine contains a positive integer which is the amount of gold in tons. Initially the miner can start from any row in the first column. From&nbsp;a given cell, the miner can move </span></p>
 
 <ol>
 	<li><span style="font-size:18px">to the cell diagonally up towards the right&nbsp;</span></li>
@@ -47,6 +46,5 @@ You do not need to read input or print anything. Your task is to complete the fu
 <p><br>
 <span style="font-size:18px"><strong>Constraints:</strong><br>
 1 ≤ n, m ≤ 50<br>
-1 ≤ M[i][j] ≤ 100</span></p>
- <p></p>
-            </div>
+0 ≤ M[i][j] ≤ 100</span></p>
+</div>
