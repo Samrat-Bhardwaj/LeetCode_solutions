@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for Java
 
 import java.io.*;
@@ -23,47 +23,53 @@ class GFG{
             System.out.println(ob.maxGold(n, m, M));
         }
     }
-} // } Driver Code Ends
+} 
+// } Driver Code Ends
 
 
 //User function Template for Java
 
 class Solution{
-    public static int tab(int[][] gold, int n, int m){
-        int[][] dp=new int[n][m];
-
-        for(int j=m-1; j>=0; j--){
-            for(int i=0; i<n; i++){
-                if(j==m-1){
-                    dp[i][j]=gold[i][j];
-                    continue;
-                }
-                
-                //if(dp[i][j]!=0) return dp[i][j];
-                
-                int ans=0;
-                if(i-1>=0)
-                    ans=Math.max(ans,dp[i-1][j+1]);//Math.max(ans,rec(i-1,j+1,gold,n,m,dp));
-                
-                ans=Math.max(ans,dp[i][j+1]);//Math.max(ans,rec(i,j+1,gold,n,m,dp));
-                
-                if(i+1<n)
-                    ans=Math.max(ans,dp[i+1][j+1]);//Math.max(ans,rec(i+1,j+1,gold,n,m,dp));
-                    
-                dp[i][j]=ans + gold[i][j];
-            }
+    public static int getMax_memo(int[][] mine, int i, int j, int[][] dp){
+        if(j==mine[0].length-1){
+            return dp[i][j] = mine[i][j];
         }
 
-        int max_gold=0;
-        for(int i=0; i<n; i++){
-            max_gold=Math.max(max_gold,dp[i][0]);
+        if(dp[i][j]!=0) return dp[i][j];
+        
+        int up = 0;
+        int same = 0;
+        int down = 0;
+
+        if(i-1 >= 0){
+            up = getMax_memo(mine, i-1, j+1,dp);
         }
 
-        return max_gold;
+        same = getMax_memo(mine, i, j+1,dp);
+
+        if(i+1<mine.length){
+            down = getMax_memo(mine, i+1, j+1,dp);
+        }
+
+        int ans = mine[i][j] + Math.max(up,Math.max(same,down));
+
+        return dp[i][j] = ans;
     }
-    
-    static int maxGold(int n, int m, int gold[][])
+
+    static int maxGold(int n, int m, int M[][])
     {
-        return tab(gold,n,m);
+        int ans = 0;
+        int[][] dp = new int[n][m];
+        // for(int i=0; i<n; i++){
+        //     int gold = getMax_rec(M,i,0);
+        //     ans = Math.max(gold,ans);
+        // }
+
+        for(int i=0; i<n; i++){
+            int gold = getMax_memo(M,i,0,dp);
+            ans = Math.max(gold,ans);
+        }
+
+        return ans;
     }
 }
