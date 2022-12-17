@@ -34,34 +34,41 @@ class GFG
 //User function Template for Java
 
 class Solution{
-    public static int isSubsetSum_memo(int idx, int[] arr, int target, int[][] dp){
-        if(target == 0){
-            return dp[idx][target] = 1;
+    public static boolean isSubsetSum_tab(int idx, int[] arr, int Target, boolean[][] dp){
+        for(idx = arr.length; idx>=0; idx--){
+            for(int target = 0; target<=Target; target++){
+                if(target == 0){
+                    dp[idx][target] = true;
+                    continue;
+                }
+        
+                if(idx == arr.length){
+                    dp[idx][target] = false; 
+                    continue;
+                }
+        
+                boolean pick = false;
+        
+                if(target - arr[idx] >=0)
+                    pick = dp[idx+1][target-arr[idx]]; //isSubsetSum_memo(idx+1, arr, target-arr[idx], dp);
+        
+                boolean notPick = dp[idx+1][target];  //isSubsetSum_memo(idx+1, arr, target, dp);
+        
+                dp[idx][target] = pick | notPick ;
+            }
         }
 
-        if(idx == arr.length){
-            return dp[idx][target] = 0; 
-        }
-
-        if(dp[idx][target]!=-1) return dp[idx][target];
-
-        int pick = 0;
-
-        if(target - arr[idx] >=0)
-            pick = isSubsetSum_memo(idx+1, arr, target-arr[idx], dp);
-
-        int notPick = isSubsetSum_memo(idx+1, arr, target, dp);
-
-        return dp[idx][target] = pick | notPick ;
+        return dp[0][Target];
     }
 
     static Boolean isSubsetSum(int N, int arr[], int target){
-        int[][] dp = new int[N+1][target+1];
-        for(int[] d:dp){
-            Arrays.fill(d,-1);
-        }
+        // int[][] dp = new int[N+1][target+1];
+        // for(int[] d:dp){
+        //     Arrays.fill(d,-1);
+        // }
         // return isSubsetSum_rec(0, arr, target);
-        int ans =  isSubsetSum_memo(0, arr, target,dp);
-        return ans == 1  ? true : false;
+        // int ans =  isSubsetSum_memo(0, arr, target,dp);
+        // return ans == 1  ? true : false;
+        return isSubsetSum_tab(0, arr, target, new boolean[N+1][target+1]);
     }
 }
