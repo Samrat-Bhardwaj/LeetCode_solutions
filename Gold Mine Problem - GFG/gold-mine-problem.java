@@ -30,46 +30,58 @@ class GFG{
 //User function Template for Java
 
 class Solution{
-    public static int getMax_memo(int[][] mine, int i, int j, int[][] dp){
-        if(j==mine[0].length-1){
-            return dp[i][j] = mine[i][j];
-        }
-
-        if(dp[i][j]!=0) return dp[i][j];
+    public static int goldmine_tab(int[][] mine, int[][] dp){
+        for(int j = mine[0].length-1; j>=0; j--){
+            for(int i=0; i<mine.length; i++){
+                if(j==mine[0].length-1){
+                    dp[i][j] = mine[i][j];
+                    continue;
+                }
         
-        int up = 0;
-        int same = 0;
-        int down = 0;
-
-        if(i-1 >= 0){
-            up = getMax_memo(mine, i-1, j+1,dp);
+                int up = 0;
+                int same = 0;
+                int down = 0;
+        
+                if(i-1 >= 0){
+                    up = dp[i-1][j+1]; //getMax_memo(mine, i-1, j+1,dp);
+                }
+        
+                same = dp[i][j+1];//getMax_memo(mine, i, j+1,dp);
+        
+                if(i+1<mine.length){
+                    down = dp[i+1][j+1]; //getMax_memo(mine, i+1, j+1,dp);
+                }
+        
+                int ans = mine[i][j] + Math.max(up,Math.max(same,down));
+        
+                dp[i][j] = ans;
+            }
         }
 
-        same = getMax_memo(mine, i, j+1,dp);
-
-        if(i+1<mine.length){
-            down = getMax_memo(mine, i+1, j+1,dp);
+        int ans = 0;
+        for(int i=0; i<mine.length; i++){
+            ans = Math.max(ans,dp[i][0]);
         }
 
-        int ans = mine[i][j] + Math.max(up,Math.max(same,down));
-
-        return dp[i][j] = ans;
+        return ans;
     }
 
     static int maxGold(int n, int m, int M[][])
     {
-        int ans = 0;
+        // int ans = 0;
         int[][] dp = new int[n][m];
         // for(int i=0; i<n; i++){
         //     int gold = getMax_rec(M,i,0);
         //     ans = Math.max(gold,ans);
         // }
 
-        for(int i=0; i<n; i++){
-            int gold = getMax_memo(M,i,0,dp);
-            ans = Math.max(gold,ans);
-        }
+        // for(int i=0; i<n; i++){
+        //     int gold = getMax_memo(M,i,0,dp);
+        //     ans = Math.max(gold,ans);
+        // }
 
-        return ans;
+        // return ans;
+
+        return goldmine_tab(M, dp);
     }
 }
